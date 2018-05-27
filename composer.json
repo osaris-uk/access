@@ -1,0 +1,24 @@
+{
+    "name": "osaris-uk/access",
+    "description": "Role & Permission based access control package for Laravel",
+    "authors": [
+        {
+            "name": "Osaris UK",
+            "email": "contact@osaris.co.uk"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "OsarisUk\\Access\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "OsarisUk\\Access\\AccessServiceProvider"
+            ]
+        }
+    }
+}
