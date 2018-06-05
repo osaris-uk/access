@@ -20,17 +20,7 @@ class AccessServiceProvider extends ServiceProvider
             __DIR__.'/config/access.php' => config_path('access.php'),
         ], 'config');
 
-        if (config('access.default.views') === true) {
-            $this->loadRoutesFrom(__DIR__.'/routes/web.php');
-
-            $this->loadViewsFrom(__DIR__.'/views', 'access');
-        }
-
         $this->loadMigrationsFrom(__DIR__.'/../migrations');
-
-        $this->publishes([
-            __DIR__.'/views' => resource_path('views/vendor/access'),
-        ], 'views');
 
         try {
             Permission::get()->map(function ($permission) {
