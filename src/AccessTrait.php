@@ -6,10 +6,8 @@ use OsarisUk\Access\Models\{Role, Permission};
 
 trait AccessTrait
 {
-    public static function boot()
+    public static function bootAccessTrait()
     {
-        parent::boot();
-
         self::created(function ($user) {
             $user->giveRoles(config('access.default.role'));
         });
