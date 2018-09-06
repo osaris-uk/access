@@ -29,6 +29,7 @@ class AccessServiceProvider extends ServiceProvider
                 });
             });
         } catch (\Exception $e) {
+            Log::error($e);
             return false;
         }
 
