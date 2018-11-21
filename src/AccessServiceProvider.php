@@ -3,6 +3,7 @@
 namespace OsarisUk\Access;
 
 use Gate;
+use Illuminate\Support\Facades\Log;
 use OsarisUk\Access\Models\Permission;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
