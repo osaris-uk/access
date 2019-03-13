@@ -54,7 +54,7 @@ Route::group(['middleware' => ['access:user,remove posts']], function () {
 
 ## Blade Directives
 
-This package integrates with the default Laravel Blade directive `@can`, this allows you to show content based on a users assigned permission:
+This package integrates with the default Laravel Blade directive `@can`, this allows you to show content based on a users assigned permission including permissions they have been assigned through a role:
 
 ```html
 @can('edit posts')
