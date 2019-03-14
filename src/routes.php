@@ -1,6 +1,6 @@
 <?php
 
-Route::name('access.')->prefix('access')->group(['middleware' => ['access:admin']], function () {
+Route::name(config('access.routes.name') . '.')->prefix(config('access.routes.prefix'))->middleware(config('access.routes.middleware'))->group(function () {
     Route::get('/', 'OsarisUk\Access\Controllers\AccessController@index')->name('index');
 
     Route::resource('/role', 'OsarisUk\Access\Controllers\RoleController')->only(['store', 'destroy']);

@@ -15,5 +15,12 @@ return [
     'default' => [
         'role' => 'user',
     ],
-
+    'routes' => [
+        'name' => 'access',
+        'prefix' => 'access',
+        'middleware' => [
+            'web',
+            'access:admin'
+        ]
+    ],
 ];
