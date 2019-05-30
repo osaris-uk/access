@@ -2,6 +2,8 @@
 
 ## Usage
 
+For Laravel 5.5 - 5.7 use v1.3.2
+
 After running the migrations, you can start using the package by adding the `AccessTrait` to your user model.
 
 ```php
@@ -52,7 +54,7 @@ Route::group(['middleware' => ['access:user,remove posts']], function () {
 
 ## Blade Directives
 
-This package integrates with the default Laravel Blade directive `@can`, this allows you to show content based on a users assigned permission:
+This package integrates with the default Laravel Blade directive `@can`, this allows you to show content based on a users assigned permission including permissions they have been assigned through a role:
 
 ```html
 @can('edit posts')
@@ -66,4 +68,17 @@ There is also a `@role` Blade directive included in this package, this allows yo
 @role('moderator')
     <a href="#">Remove Post</a>
 @endrole
+```
+
+## Available Methods
+
+```php
+giveRoles(...$roles)
+withdrawRoles(...$roles)
+updateRoles(...$roles)
+givePermissionTo(...$permissions)
+withdrawPermissionTo(...$permissions)
+updatePermissions(...$permissions)
+hasRole(...$roles)
+hasPermissionTo($permission)
 ```

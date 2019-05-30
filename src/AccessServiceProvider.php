@@ -4,8 +4,8 @@ namespace OsarisUk\Access;
 
 use Gate;
 use Illuminate\Support\Facades\Log;
-use OsarisUk\Access\Models\Permission;
 use Illuminate\Support\Facades\Blade;
+use OsarisUk\Access\Models\Permission;
 use Illuminate\Support\ServiceProvider;
 
 class AccessServiceProvider extends ServiceProvider
@@ -22,6 +22,14 @@ class AccessServiceProvider extends ServiceProvider
         ], 'config');
 
         $this->loadMigrationsFrom(__DIR__.'/../migrations');
+
+        $this->loadRoutesFrom(__DIR__.'/routes.php');
+
+        $this->loadViewsFrom(__DIR__.'/views', 'access');
+
+        $this->publishes([
+            __DIR__.'/views' => resource_path('views/vendor/access'),
+        ], 'views');
 
         try {
             Permission::get()->map(function ($permission) {
