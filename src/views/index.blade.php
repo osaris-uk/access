@@ -20,7 +20,7 @@
                                         <li class="list-group-item list-group-item-action">
                                             <form method="POST" action="{{ route('access.role.store') }}">
                                                 @csrf
-                                                <div class="input-group mb-n3">
+                                                <div class="input-group">
                                                     <input type="text" class="form-control" name="new_role" placeholder="Add New Role +" aria-label="New Role" aria-describedby="new-role">
                                                     <div class="input-group-append">
                                                         <button class="btn btn-outline-secondary" type="submit" id="new-role">Add</button>
@@ -48,7 +48,7 @@
                                         <li class="list-group-item list-group-item-action">
                                             <form method="POST" action="{{ route('access.permission.store') }}">
                                                 @csrf
-                                                <div class="input-group mb-n3">
+                                                <div class="input-group">
                                                     <input type="text" class="form-control" name="new_permission" placeholder="Add New Permission +" aria-label="New Permission" aria-describedby="new-permission">
                                                     <div class="input-group-append">
                                                         <button class="btn btn-outline-secondary" type="submit" id="new-permission">Add</button>
