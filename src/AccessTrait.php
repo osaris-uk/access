@@ -2,6 +2,7 @@
 
 namespace OsarisUk\Access;
 
+use Illuminate\Support\Arr;
 use OsarisUk\Access\Models\{Role, Permission};
 
 trait AccessTrait
@@ -15,7 +16,7 @@ trait AccessTrait
 
     public function giveRoles(...$roles)
     {
-        $roles = $this->getRoles(array_flatten($roles));
+        $roles = $this->getRoles(Arr::flatten($roles));
 
         if ($roles === null) {
             return $this;
@@ -28,7 +29,7 @@ trait AccessTrait
 
     public function withdrawRoles(...$roles)
     {
-        $roles = $this->getRoles(array_flatten($roles));
+        $roles = $this->getRoles(Arr::flatten($roles));
 
         $this->roles()->detach($roles);
 
@@ -44,7 +45,7 @@ trait AccessTrait
 
     public function givePermissionTo(...$permissions)
     {
-        $permissions = $this->getPermissions(array_flatten($permissions));
+        $permissions = $this->getPermissions(Arr::flatten($permissions));
 
         if ($permissions === null) {
             return $this;
@@ -57,7 +58,7 @@ trait AccessTrait
 
     public function withdrawPermissionTo(...$permissions)
     {
-        $permissions = $this->getPermissions(array_flatten($permissions));
+        $permissions = $this->getPermissions(Arr::flatten($permissions));
 
         $this->permissions()->detach($permissions);
 
