@@ -16,6 +16,7 @@ return [
         'role' => 'user',
     ],
     'routes' => [
+        'use_provided' => false,
         'name' => 'access',
         'prefix' => 'access',
         'middleware' => [

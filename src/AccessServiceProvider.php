@@ -23,13 +23,15 @@ class AccessServiceProvider extends ServiceProvider
 
         $this->loadMigrationsFrom(__DIR__.'/../migrations');
 
-        $this->loadRoutesFrom(__DIR__.'/routes.php');
+        if(config('access.routes.use_provided')) {
+            $this->loadRoutesFrom(__DIR__.'/routes.php');
 
-        $this->loadViewsFrom(__DIR__.'/views', 'access');
-
-        $this->publishes([
-            __DIR__.'/views' => resource_path('views/vendor/access'),
-        ], 'views');
+            $this->loadViewsFrom(__DIR__.'/views', 'access');
+    
+            $this->publishes([
+                __DIR__.'/views' => resource_path('views/vendor/access'),
+            ], 'views');
+        }
 
         try {
             Permission::get()->map(function ($permission) {
