@@ -2,6 +2,7 @@
 
 namespace OsarisUk\Access\Models;
 
+use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
@@ -17,7 +18,7 @@ class Role extends Model
 
     public function givePermissionTo(...$permissions)
     {
-        $permissions = $this->getPermissions(array_flatten($permissions));
+        $permissions = $this->getPermissions(Arr::flatten($permissions));
 
         if ($permissions === null) {
             return $this;
@@ -30,7 +31,7 @@ class Role extends Model
 
     public function withdrawPermissionTo(...$permissions)
     {
-        $permissions = $this->getPermissions(array_flatten($permissions));
+        $permissions = $this->getPermissions(Arr::flatten($permissions));
 
         $this->permissions()->detach($permissions);
 
