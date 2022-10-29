@@ -25,6 +25,8 @@ You can publish the config file with:
 php artisan vendor:publish --provider="OsarisUk\Access\AccessServiceProvider" --tag="config"
 ```
 
+If your user model is not `App\User` then you will need to define your user model in the config.
+
 
 ## Middleware
 

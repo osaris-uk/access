@@ -14,6 +14,7 @@ return [
 
     'default' => [
         'role' => 'user',
+        'user_model' => App\User::class,
     ],
     'routes' => [
         'use_provided' => false,
