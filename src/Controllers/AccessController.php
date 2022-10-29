@@ -6,12 +6,14 @@ use Illuminate\Http\Request;
 use OsarisUk\Access\Models\Role;
 use App\Http\Controllers\Controller;
 use OsarisUk\Access\Models\Permission;
+use Illuminate\Support\Facades\Config;
 
 class AccessController extends Controller
 {
     public function __construct()
     {
-        $this->user = new config('access.default.user_model');
+        $model = Config::get('auth.providers.users.model');
+        $this->users = new $model;
     }
 
     public function index()
@@ -26,7 +28,7 @@ class AccessController extends Controller
     {
         return view('access::roles', [
             'roles' => Role::get(),
-            'users' => $this->user->get()
+            'users' => $this->users->get()
         ]);
     }
 
@@ -34,7 +36,7 @@ class AccessController extends Controller
     {
         foreach($request->userRoles as $userId => $roles)
         {
-            $user = $this->user->find($userId);
+            $user = $this->users->find($userId);
 
             $user->updateRoles(array_keys($roles));
         }
