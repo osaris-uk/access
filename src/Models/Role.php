@@ -5,6 +5,10 @@ namespace OsarisUk\Access\Models;
 use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Role
+ * @package OsarisUk\Access\Models
+ */
 class Role extends Model
 {
     /**
@@ -16,6 +20,10 @@ class Role extends Model
         'name',
     ];
 
+    /**
+     * @param mixed ...$permissions
+     * @return $this
+     */
     public function givePermissionTo(...$permissions)
     {
         $permissions = $this->getPermissions(Arr::flatten($permissions));
@@ -29,6 +37,10 @@ class Role extends Model
         return $this;
     }
 
+    /**
+     * @param mixed ...$permissions
+     * @return $this
+     */
     public function withdrawPermissionTo(...$permissions)
     {
         $permissions = $this->getPermissions(Arr::flatten($permissions));
@@ -38,6 +50,10 @@ class Role extends Model
         return $this;
     }
 
+    /**
+     * @param mixed ...$permissions
+     * @return $this
+     */
     public function updatePermissions(...$permissions)
     {
         $this->permissions()->detach();
@@ -45,16 +61,27 @@ class Role extends Model
         return $this->givePermissionTo($permissions);
     }
 
+    /**
+     * @param array $permissions
+     * @return mixed
+     */
     protected function getPermissions(array $permissions)
     {
         return Permission::whereIn('name', $permissions)->get();
     }
 
+    /**
+     * @param $permission
+     * @return bool
+     */
     public function hasPermission($permission)
     {
         return (bool) $this->permissions->where('name', $permission)->count();
     }
 
+    /**
+     * @return mixed
+     */
     public function permissions()
     {
         return $this->belongsToMany(Permission::class, 'roles_permissions')->withTimestamps();

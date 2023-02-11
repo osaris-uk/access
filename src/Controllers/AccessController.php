@@ -8,14 +8,24 @@ use App\Http\Controllers\Controller;
 use OsarisUk\Access\Models\Permission;
 use Illuminate\Support\Facades\Config;
 
+/**
+ * Class AccessController
+ * @package OsarisUk\Access\Controllers
+ */
 class AccessController extends Controller
 {
+    /**
+     * AccessController constructor.
+     */
     public function __construct()
     {
         $model = Config::get('auth.providers.users.model');
         $this->users = new $model;
     }
 
+    /**
+     * @return mixed
+     */
     public function index()
     {
         return view('access::index', [
@@ -24,6 +34,9 @@ class AccessController extends Controller
         ]);
     }
 
+    /**
+     * @return mixed
+     */
     public function getUserRoles()
     {
         return view('access::roles', [
@@ -32,6 +45,10 @@ class AccessController extends Controller
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function postUserRoles(Request $request)
     {
         foreach($request->userRoles as $userId => $roles)
@@ -44,6 +61,9 @@ class AccessController extends Controller
         return back();
     }
 
+    /**
+     * @return mixed
+     */
     public function getRolePermissions()
     {
         return view('access::role_permissions', [
@@ -52,6 +72,10 @@ class AccessController extends Controller
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function postRolePermissions(Request $request)
     {
         foreach($request->rolePermissions as $roleId => $permissions)

@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Blade;
 use OsarisUk\Access\Models\Permission;
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * Class AccessServiceProvider
+ * @package OsarisUk\Access
+ */
 class AccessServiceProvider extends ServiceProvider
 {
     /**

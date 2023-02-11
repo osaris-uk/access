@@ -4,6 +4,10 @@ namespace OsarisUk\Access\Middleware;
 
 use Closure;
 
+/**
+ * Class AccessMiddleware
+ * @package OsarisUk\Access\Middleware
+ */
 class AccessMiddleware
 {
     /**

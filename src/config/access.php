@@ -13,7 +13,9 @@ return [
     */
 
     'default' => [
-        'role' => 'user',
+        'roles' => [
+            'user',
+            ],
     ],
     'routes' => [
         'use_provided' => false,
