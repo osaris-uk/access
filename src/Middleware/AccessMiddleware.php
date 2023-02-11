@@ -9,17 +9,19 @@ class AccessMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure $next
+     * @param string $roles
+     * @param null $permission
      * @return mixed
      */
-    public function handle($request, Closure $next, $role, $permission = null)
+    public function handle($request, Closure $next, string $roles, $permission = null)
     {
-        if (!$request->user() || !$request->user()->hasRole($role)) {
+        if (!$request->user() || (!empty($permission) && !$request->user()->can($permission))) {
             abort(404);
         }
 
-        if ($permission !== null && !$request->user()->can($permission)) {
+        if (!empty($roles) && !$request->user()->hasRole(explode('|', $roles))) {
             abort(404);
         }
 
