@@ -25,7 +25,7 @@ class AccessMiddleware
             abort(404);
         }
 
-        if (!empty($roles) && !$request->user()->hasRole(explode('|', $roles))) {
+        if (!empty($roles) && !$request->user()->hasRole(... explode('|', $roles))) {
             abort(404);
         }
 
