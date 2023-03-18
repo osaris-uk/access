@@ -74,7 +74,7 @@ class Role extends Model
      * @param $permission
      * @return bool
      */
-    public function hasPermission($permission)
+    public function hasPermission(String $permission)
     {
         return (bool) $this->permissions->where('name', $permission)->count();
     }

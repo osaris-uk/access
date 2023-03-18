@@ -31,7 +31,7 @@ class AccessServiceProvider extends ServiceProvider
             $this->loadRoutesFrom(__DIR__.'/routes.php');
 
             $this->loadViewsFrom(__DIR__.'/views', 'access');
-    
+
             $this->publishes([
                 __DIR__.'/views' => resource_path('views/vendor/access'),
             ], 'views');
@@ -40,7 +40,7 @@ class AccessServiceProvider extends ServiceProvider
         try {
             Permission::get()->map(function ($permission) {
                 Gate::define($permission->name, function ($user) use ($permission) {
-                    return $user->hasPermissionTo($permission);
+                    return $user->hasPermissionTo($permission->name);
                 });
             });
         } catch (\Exception $e) {

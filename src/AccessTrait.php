@@ -2,7 +2,9 @@
 
 namespace OsarisUk\Access;
 
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use OsarisUk\Access\Models\{Role, Permission};
 
 /**
@@ -104,7 +106,7 @@ trait AccessTrait
      * @param mixed ...$roles
      * @return bool
      */
-    public function hasRole(...$roles)
+    public function hasRole(...$roles): bool
     {
         foreach ($roles as $role) {
             if ($this->roles->contains('name', $role)) {
@@ -116,9 +118,9 @@ trait AccessTrait
 
     /**
      * @param array $roles
-     * @return mixed
+     * @return Collection
      */
-    protected function getRoles(array $roles)
+    protected function getRoles(array $roles): Collection
     {
         return Role::whereIn('name', $roles)->get();
     }
@@ -127,16 +129,16 @@ trait AccessTrait
      * @param $permission
      * @return bool
      */
-    public function hasPermissionTo($permission)
+    public function hasPermissionTo($permission): bool
     {
         return $this->hasPermissionThroughRole($permission) || $this->hasPermission($permission);
     }
 
     /**
      * @param array $permissions
-     * @return mixed
+     * @return Collection
      */
-    protected function getPermissions(array $permissions)
+    protected function getPermissions(array $permissions): Collection
     {
         return Permission::whereIn('name', $permissions)->get();
     }
@@ -145,10 +147,10 @@ trait AccessTrait
      * @param $permission
      * @return bool
      */
-    protected function hasPermissionThroughRole($permission)
+    protected function hasPermissionThroughRole($permission): bool
     {
-        foreach ($permission->roles as $role) {
-            if ($this->roles->contains($role)) {
+        foreach ($this->roles as $role) {
+            if ($role->hasPermission($permission)) {
                 return true;
             }
         }
@@ -160,23 +162,23 @@ trait AccessTrait
      * @param $permission
      * @return bool
      */
-    protected function hasPermission($permission)
+    protected function hasPermission(String $permission): bool
     {
-        return (bool) $this->permissions->where('name', $permission->name)->count();
+        return (bool) $this->permissions->where('name', $permission)->count();
     }
 
     /**
-     * @return mixed
+     * @return BelongsToMany
      */
-    public function roles()
+    public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class, 'users_roles')->withTimestamps();
     }
 
     /**
-     * @return mixed
+     * @return BelongsToMany
      */
-    public function permissions()
+    public function permissions(): BelongsToMany
     {
         return $this->belongsToMany(Permission::class, 'users_permissions')->withTimestamps();
     }
