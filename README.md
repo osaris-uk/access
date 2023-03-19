@@ -33,7 +33,7 @@ This package will read your default user model from Laravel's auth config `auth.
 This package ships with `AccessMiddleware`.  This allows you to protect your routes allowing access to users with specific roles:
 
 ```php
-Route::group(['middleware' => ['access:admin']], function () {
+Route::group(['middleware' => ['access:admin|moderator']], function () {
     //
 });
 
@@ -50,6 +50,10 @@ Route::group(['middleware' => ['access:user,create posts']], function () {
 });
 
 Route::group(['middleware' => ['access:user,remove posts']], function () {
+    //
+});
+
+Route::group(['middleware' => ['access:,edit posts']], function () {
     //
 });
 ```
