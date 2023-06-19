@@ -18,12 +18,12 @@ return [
             ],
     ],
     'routes' => [
-        'use_provided' => false,
+        'use_provided' => true,
         'name' => 'access',
         'prefix' => 'access',
         'middleware' => [
             'web',
-            'access:admin'
-        ]
+            'access:admin',
+        ],
     ],
 ];

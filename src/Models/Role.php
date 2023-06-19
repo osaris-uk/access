@@ -2,19 +2,20 @@
 
 namespace OsarisUk\Access\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 /**
  * Class Role
  * @package OsarisUk\Access\Models
+ * @property string $name
  */
 class Role extends Model
 {
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
+     * @var array<string>
      */
     protected $fillable = [
         'name',
@@ -22,13 +23,12 @@ class Role extends Model
 
     /**
      * @param mixed ...$permissions
-     * @return $this
      */
-    public function givePermissionTo(...$permissions)
+    public function givePermissionTo(...$permissions): Role
     {
         $permissions = $this->getPermissions(Arr::flatten($permissions));
 
-        if ($permissions === null) {
+        if (! $permissions->count()) {
             return $this;
         }
 
@@ -39,9 +39,8 @@ class Role extends Model
 
     /**
      * @param mixed ...$permissions
-     * @return $this
      */
-    public function withdrawPermissionTo(...$permissions)
+    public function withdrawPermissionTo(...$permissions): Role
     {
         $permissions = $this->getPermissions(Arr::flatten($permissions));
 
@@ -52,9 +51,8 @@ class Role extends Model
 
     /**
      * @param mixed ...$permissions
-     * @return $this
      */
-    public function updatePermissions(...$permissions)
+    public function updatePermissions(...$permissions): Role
     {
         $this->permissions()->detach();
 
@@ -62,27 +60,23 @@ class Role extends Model
     }
 
     /**
-     * @param array $permissions
-     * @return mixed
+     * @param array<string> $permissions
+     * @return Collection
      */
-    protected function getPermissions(array $permissions)
+    protected function getPermissions(array $permissions): Collection
     {
         return Permission::whereIn('name', $permissions)->get();
     }
 
-    /**
-     * @param $permission
-     * @return bool
-     */
-    public function hasPermission(String $permission)
+    public function hasPermission(string $permission): bool
     {
         return (bool) $this->permissions->where('name', $permission)->count();
     }
 
     /**
-     * @return mixed
+     * @return BelongsToMany
      */
-    public function permissions()
+    public function permissions(): BelongsToMany
     {
         return $this->belongsToMany(Permission::class, 'roles_permissions')->withTimestamps();
     }

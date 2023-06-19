@@ -2,8 +2,9 @@
 
 namespace OsarisUk\Access\Controllers;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
 use OsarisUk\Access\Models\Permission;
 
 /**
@@ -12,11 +13,7 @@ use OsarisUk\Access\Models\Permission;
  */
 class PermissionController extends Controller
 {
-    /**
-     * @param Request $request
-     * @return mixed
-     */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         if($request->new_permission) {
             Permission::create([
@@ -27,14 +24,9 @@ class PermissionController extends Controller
         return back();
     }
 
-    /**
-     * @param Request $request
-     * @param $id
-     * @return mixed
-     */
-    public function destroy(Request $request, $id)
+    public function destroy(Request $request, Permission $permission): RedirectResponse
     {
-        Permission::destroy($id);
+        $permission->delete();
 
         return back();
     }
