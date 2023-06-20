@@ -40,7 +40,7 @@
             "@analyse"
         ],
         "pest": [
-            "./vendor/bin/pest"
+            "XDEBUG_MODE=coverage ./vendor/bin/pest --coverage --min=90"
         ]
     },
     "extra": {
