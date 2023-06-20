@@ -17,6 +17,9 @@
         <include>
             <directory suffix=".php">src/</directory>
         </include>
+        <exclude>
+            <directory>src/views/</directory>
+        </exclude>
     </coverage>
     <testsuites>
         <testsuite name="Unit">
