@@ -18,7 +18,7 @@ return [
             ],
     ],
     'routes' => [
-        'use_provided' => true,
+        'use_provided' => false,
         'name' => 'access',
         'prefix' => 'access',
         'middleware' => [

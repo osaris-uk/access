@@ -21,14 +21,14 @@ trait AccessTrait
     }
 
     /**
-     * @param mixed ...$roles
+     * @param array<string|null> ...$roles
      * @return self
      */
     public function giveRoles(...$roles)
     {
         $roles = $this->getRoles(Arr::flatten($roles));
 
-        if ($roles === null) {
+        if ($roles->isEmpty()) {
             return $this;
         }
 
@@ -38,7 +38,7 @@ trait AccessTrait
     }
 
     /**
-     * @param mixed ...$roles
+     * @param array<string|null> ...$roles
      * @return self
      */
     public function withdrawRoles(...$roles)
@@ -51,7 +51,7 @@ trait AccessTrait
     }
 
     /**
-     * @param mixed ...$roles
+     * @param array<string|null> ...$roles
      * @return self
      */
     public function updateRoles(...$roles)
@@ -62,14 +62,14 @@ trait AccessTrait
     }
 
     /**
-     * @param mixed ...$permissions
+     * @param array<string|null> ...$permissions
      * @return self
      */
     public function givePermissionTo(...$permissions)
     {
         $permissions = $this->getPermissions(Arr::flatten($permissions));
 
-        if ($permissions === null) {
+        if ($permissions->isEmpty()) {
             return $this;
         }
 
@@ -79,7 +79,7 @@ trait AccessTrait
     }
 
     /**
-     * @param mixed ...$permissions
+     * @param array<string|null> ...$permissions
      * @return self
      */
     public function withdrawPermissionTo(...$permissions)
@@ -92,7 +92,7 @@ trait AccessTrait
     }
 
     /**
-     * @param mixed ...$permissions
+     * @param array<string|null> ...$permissions
      * @return self
      */
     public function updatePermissions(...$permissions)
@@ -103,7 +103,7 @@ trait AccessTrait
     }
 
     /**
-     * @param mixed ...$roles
+     * @param array<string|null> ...$roles
      */
     public function hasRole(...$roles): bool
     {

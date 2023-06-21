@@ -16,20 +16,29 @@ class AccessMiddleware
      *
      * @param Request $request
      * @param Closure $next
-     * @param string $roles
+     * @param string|null $roles
      * @param string|null $permission
      * @return mixed
      */
-    public function handle(Request $request, Closure $next, string $roles, string $permission = null)
+    public function handle(Request $request, Closure $next, string $roles = null, string $permission = null)
     {
-        if (!$request->user() || (!empty($permission) && !$request->user()->can($permission))) {
+        abort_if(!$request->user() || (empty($roles) && empty($permission)), 404);
+
+        if (!empty($permission)) {
+            if ($request->user()->can($permission)) {
+                return $next($request);
+            }
+
             abort(404);
         }
 
-        if (!empty($roles) && !$request->user()->hasRole(... explode('|', $roles))) {
+        if (!empty($roles)) {
+            if ($request->user()->hasRole(... explode('|', $roles))) {
+                return $next($request);
+            }
+
             abort(404);
         }
-
-        return $next($request);
     }
 }
+//
