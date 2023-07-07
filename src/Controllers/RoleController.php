@@ -2,9 +2,10 @@
 
 namespace OsarisUk\Access\Controllers;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use OsarisUk\Access\Models\Role;
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
 
 /**
  * Class RoleController
@@ -12,11 +13,7 @@ use App\Http\Controllers\Controller;
  */
 class RoleController extends Controller
 {
-    /**
-     * @param Request $request
-     * @return mixed
-     */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         if($request->new_role) {
             Role::create([
@@ -27,14 +24,9 @@ class RoleController extends Controller
         return back();
     }
 
-    /**
-     * @param Request $request
-     * @param $id
-     * @return mixed
-     */
-    public function destroy(Request $request, $id)
+    public function destroy(Request $request, Role $role): RedirectResponse
     {
-        Role::destroy($id);
+        $role->delete();
 
         return back();
     }

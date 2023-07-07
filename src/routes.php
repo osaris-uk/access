@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 Route::name(config('access.routes.name') . '.')->prefix(config('access.routes.prefix'))->middleware(config('access.routes.middleware'))->group(function () {
     Route::get('/', 'OsarisUk\Access\Controllers\AccessController@index')->name('index');
 

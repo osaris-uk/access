@@ -1,6 +1,13 @@
 {
     "name": "osaris-uk/access",
     "description": "Role & Permission based access control package for Laravel",
+    "keywords": [
+        "osaris-uk",
+        "access"
+    ],
+    "homepage": "https://github.com/osaris-uk/access",
+    "license": "MIT",
+    "type": "library",
     "authors": [
         {
             "name": "Osaris UK",
@@ -9,19 +16,49 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php" : "^7.0 | ^8.0",
-        "illuminate/support": ">=5.8"
+        "php" : "^7.3 | ^8.0",
+        "illuminate/auth": ">=6.0",
+        "illuminate/database": ">=6.0",
+        "illuminate/http": ">=6.0",
+        "illuminate/routing": ">=6.0",
+        "illuminate/support": ">=6.0",
+        "illuminate/view": ">=6.0"
     },
     "autoload": {
         "psr-4": {
-            "OsarisUk\\Access\\": "src/"
+            "OsarisUk\\Access\\": "src/",
+            "OsarisUk\\Access\\Tests\\": "tests"
         }
+    },
+    "scripts": {
+        "analyse": [
+            "./vendor/bin/phpstan analyse --memory-limit 2G"
+        ],
+        "test": [
+            "Composer\\Config::disableProcessTimeout",
+            "@pest",
+            "@analyse"
+        ],
+        "pest": [
+            "XDEBUG_MODE=coverage ./vendor/bin/pest --coverage --min=90"
+        ]
     },
     "extra": {
         "laravel": {
             "providers": [
                 "OsarisUk\\Access\\AccessServiceProvider"
             ]
+        }
+    },
+    "require-dev": {
+        "nunomaduro/larastan": "1.x-dev",
+        "orchestra/testbench": "6.x-dev",
+        "pestphp/pest": "1.x-dev",
+        "pestphp/pest-plugin-laravel": "1.x-dev"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
         }
     }
 }

@@ -23,7 +23,7 @@ return [
         'prefix' => 'access',
         'middleware' => [
             'web',
-            'access:admin'
-        ]
+            'access:admin',
+        ],
     ],
 ];

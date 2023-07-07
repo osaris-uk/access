@@ -2,11 +2,14 @@
 
 namespace OsarisUk\Access\Controllers;
 
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use OsarisUk\Access\Models\Role;
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
 use OsarisUk\Access\Models\Permission;
 use Illuminate\Support\Facades\Config;
+use Illuminate\View\View;
 
 /**
  * Class AccessController
@@ -14,72 +17,63 @@ use Illuminate\Support\Facades\Config;
  */
 class AccessController extends Controller
 {
+    /** @var Model $users */
+    public $users;
+
     /**
      * AccessController constructor.
      */
     public function __construct()
     {
-        $model = Config::get('auth.providers.users.model');
-        $this->users = new $model;
+        $this->users = app()->make(Config::get('auth.providers.users.model'));
     }
 
-    /**
-     * @return mixed
-     */
-    public function index()
+    public function index(): View
     {
+        /** @phpstan-ignore-next-line */
         return view('access::index', [
             'roles' => Role::get(),
-            'permissions' => Permission::get()
+            'permissions' => Permission::get(),
         ]);
     }
 
-    /**
-     * @return mixed
-     */
-    public function getUserRoles()
+    public function getUserRoles(): View
     {
+        /** @phpstan-ignore-next-line */
         return view('access::roles', [
             'roles' => Role::get(),
-            'users' => $this->users->get()
+            'users' => $this->users->get(),
         ]);
     }
 
-    /**
-     * @param Request $request
-     * @return mixed
-     */
-    public function postUserRoles(Request $request)
+    public function postUserRoles(Request $request): RedirectResponse
     {
         foreach($request->userRoles as $userId => $roles)
         {
+            /** @var Model $user */
             $user = $this->users->find($userId);
 
+            /** @phpstan-ignore-next-line */
             $user->updateRoles(array_keys($roles));
         }
 
         return back();
     }
 
-    /**
-     * @return mixed
-     */
-    public function getRolePermissions()
+    public function getRolePermissions(): View
     {
+        /** @phpstan-ignore-next-line */
         return view('access::role_permissions', [
             'roles' => Role::get(),
-            'permissions' => Permission::get()
+            'permissions' => Permission::get(),
         ]);
     }
 
-    /**
-     * @param Request $request
-     * @return mixed
-     */
-    public function postRolePermissions(Request $request)
+    public function postRolePermissions(Request $request): RedirectResponse
     {
         foreach($request->rolePermissions as $roleId => $permissions)
         {
+            /** @var Role $role */
             $role = Role::find($roleId);
 
             $role->updatePermissions(array_keys($permissions));

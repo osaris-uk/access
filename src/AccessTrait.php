@@ -21,14 +21,14 @@ trait AccessTrait
     }
 
     /**
-     * @param mixed ...$roles
-     * @return $this
+     * @param array<string|null> ...$roles
+     * @return self
      */
     public function giveRoles(...$roles)
     {
         $roles = $this->getRoles(Arr::flatten($roles));
 
-        if ($roles === null) {
+        if ($roles->isEmpty()) {
             return $this;
         }
 
@@ -38,8 +38,8 @@ trait AccessTrait
     }
 
     /**
-     * @param mixed ...$roles
-     * @return $this
+     * @param array<string|null> ...$roles
+     * @return self
      */
     public function withdrawRoles(...$roles)
     {
@@ -51,8 +51,8 @@ trait AccessTrait
     }
 
     /**
-     * @param mixed ...$roles
-     * @return AccessTrait
+     * @param array<string|null> ...$roles
+     * @return self
      */
     public function updateRoles(...$roles)
     {
@@ -62,14 +62,14 @@ trait AccessTrait
     }
 
     /**
-     * @param mixed ...$permissions
-     * @return $this
+     * @param array<string|null> ...$permissions
+     * @return self
      */
     public function givePermissionTo(...$permissions)
     {
         $permissions = $this->getPermissions(Arr::flatten($permissions));
 
-        if ($permissions === null) {
+        if ($permissions->isEmpty()) {
             return $this;
         }
 
@@ -79,8 +79,8 @@ trait AccessTrait
     }
 
     /**
-     * @param mixed ...$permissions
-     * @return $this
+     * @param array<string|null> ...$permissions
+     * @return self
      */
     public function withdrawPermissionTo(...$permissions)
     {
@@ -92,8 +92,8 @@ trait AccessTrait
     }
 
     /**
-     * @param mixed ...$permissions
-     * @return AccessTrait
+     * @param array<string|null> ...$permissions
+     * @return self
      */
     public function updatePermissions(...$permissions)
     {
@@ -103,8 +103,7 @@ trait AccessTrait
     }
 
     /**
-     * @param mixed ...$roles
-     * @return bool
+     * @param array<string|null> ...$roles
      */
     public function hasRole(...$roles): bool
     {
@@ -125,11 +124,7 @@ trait AccessTrait
         return Role::whereIn('name', $roles)->get();
     }
 
-    /**
-     * @param $permission
-     * @return bool
-     */
-    public function hasPermissionTo($permission): bool
+    public function hasPermissionTo(string $permission): bool
     {
         return $this->hasPermissionThroughRole($permission) || $this->hasPermission($permission);
     }
@@ -143,11 +138,7 @@ trait AccessTrait
         return Permission::whereIn('name', $permissions)->get();
     }
 
-    /**
-     * @param $permission
-     * @return bool
-     */
-    protected function hasPermissionThroughRole($permission): bool
+    protected function hasPermissionThroughRole(string $permission): bool
     {
         foreach ($this->roles as $role) {
             if ($role->hasPermission($permission)) {
@@ -158,11 +149,7 @@ trait AccessTrait
         return false;
     }
 
-    /**
-     * @param $permission
-     * @return bool
-     */
-    protected function hasPermission(String $permission): bool
+    protected function hasPermission(string $permission): bool
     {
         return (bool) $this->permissions->where('name', $permission)->count();
     }

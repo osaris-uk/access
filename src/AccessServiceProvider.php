@@ -2,9 +2,10 @@
 
 namespace OsarisUk\Access;
 
-use Gate;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Blade;
+use OsarisUk\Access\Middleware\AccessMiddleware;
 use OsarisUk\Access\Models\Permission;
 use Illuminate\Support\ServiceProvider;
 
@@ -38,14 +39,13 @@ class AccessServiceProvider extends ServiceProvider
         }
 
         try {
-            Permission::get()->map(function ($permission) {
+            Permission::get()->map(function (Permission $permission) {
                 Gate::define($permission->name, function ($user) use ($permission) {
                     return $user->hasPermissionTo($permission->name);
                 });
             });
         } catch (\Exception $e) {
             Log::error($e);
-            return false;
         }
 
         Blade::directive('role', function ($role) {
@@ -68,6 +68,6 @@ class AccessServiceProvider extends ServiceProvider
             __DIR__.'/config/access.php', 'access'
         );
 
-        $this->app['router']->aliasMiddleware('access', \OsarisUk\Access\Middleware\AccessMiddleware::class);
+        app('router')->aliasMiddleware('access', AccessMiddleware::class);
     }
 }

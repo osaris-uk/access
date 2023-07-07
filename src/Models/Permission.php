@@ -3,26 +3,26 @@
 namespace OsarisUk\Access\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * Class Permission
  * @package OsarisUk\Access\Models
+ * @property string $name
  */
 class Permission extends Model
 {
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
+     * @var array<string>
      */
     protected $fillable = [
         'name',
     ];
 
     /**
-     * @return mixed
+     * @return BelongsToMany
      */
-    public function roles()
+    public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class, 'roles_permissions')->withTimestamps();
     }
