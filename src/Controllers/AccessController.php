@@ -30,6 +30,7 @@ class AccessController extends Controller
 
     public function index(): View
     {
+        /** @phpstan-ignore-next-line */
         return view('access::index', [
             'roles' => Role::get(),
             'permissions' => Permission::get(),
@@ -38,6 +39,7 @@ class AccessController extends Controller
 
     public function getUserRoles(): View
     {
+        /** @phpstan-ignore-next-line */
         return view('access::roles', [
             'roles' => Role::get(),
             'users' => $this->users->get(),
@@ -51,7 +53,7 @@ class AccessController extends Controller
             /** @var Model $user */
             $user = $this->users->find($userId);
 
-            /** @phpstan-ignore-next-line  */
+            /** @phpstan-ignore-next-line */
             $user->updateRoles(array_keys($roles));
         }
 
@@ -60,6 +62,7 @@ class AccessController extends Controller
 
     public function getRolePermissions(): View
     {
+        /** @phpstan-ignore-next-line */
         return view('access::role_permissions', [
             'roles' => Role::get(),
             'permissions' => Permission::get(),
